@@ -62,6 +62,17 @@ namespace NetworkDrawing
 
         private void ServerFunc(int x, int y)
         {
+            if(client == null)
+            {
+                testLabel.Text = "null";
+            }
+                else
+            {
+                testLabel.Text = "Client Found";
+            }
+            Refresh();
+            Thread.Sleep(1000);
+
             Graphics g = this.CreateGraphics();
 
             int recX;
@@ -127,6 +138,18 @@ namespace NetworkDrawing
                 Refresh();
 
                 Socket client = newsock.Accept();
+
+                if (client == null)
+                {
+                    testLabel.Text = "null";
+                }
+                else
+                {
+                    testLabel.Text = "Client Found";
+                }
+                Refresh();
+                Thread.Sleep(1000); 
+
 
                 IPEndPoint clientep = (IPEndPoint)client.RemoteEndPoint;
             }
