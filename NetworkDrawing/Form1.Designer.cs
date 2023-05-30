@@ -60,7 +60,7 @@
             this.connectButton.Location = new System.Drawing.Point(18, 92);
             this.connectButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.connectButton.Name = "connectButton";
-            this.connectButton.Size = new System.Drawing.Size(76, 31);
+            this.connectButton.Size = new System.Drawing.Size(138, 31);
             this.connectButton.TabIndex = 2;
             this.connectButton.Text = "Server";
             this.connectButton.UseVisualStyleBackColor = true;

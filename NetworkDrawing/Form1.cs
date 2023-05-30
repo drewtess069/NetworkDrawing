@@ -19,6 +19,9 @@ namespace NetworkDrawing
         byte[] dataX = new byte[1024];
         byte[] dataY = new byte[1024];
         Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        Socket client;
+
+        Point mousePoint;
 
         int x;
         int y;
@@ -36,18 +39,7 @@ namespace NetworkDrawing
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            x = e.X;
-            y = e.Y;
-
-            if (serverCheck.Checked)
-            {
-                ServerFunc(x, y);
-
-            }
-            else if (clientCheck.Checked)
-            {
-                ClientFunc(x, y);
-            }
+            Point mousePoint = new Point(e.X, e.Y);
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -70,20 +62,6 @@ namespace NetworkDrawing
 
             int recX;
             int recY;
-
-            IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("10.63.42.206"), 9050);
-
-            Socket newsock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-            newsock.Bind(ipep);
-
-            newsock.Listen(10);
-
-            Refresh();
-
-            Socket client = newsock.Accept();
-
-            IPEndPoint clientep = (IPEndPoint)client.RemoteEndPoint;
 
             dataX = Encoding.UTF8.GetBytes(x.ToString());
             dataY = Encoding.UTF8.GetBytes(y.ToString());
@@ -115,7 +93,7 @@ namespace NetworkDrawing
 
             Refresh();
 
-           // g.DrawRectangle(redPen, recX, recY, 1, 1);
+            // g.DrawRectangle(redPen, recX, recY, 1, 1);
 
             //stringData = Encoding.UTF8.GetString(data, 0, recv);
 
@@ -124,16 +102,28 @@ namespace NetworkDrawing
 
             server.Send(Encoding.UTF8.GetBytes(dataX.ToString()));
             server.Send(Encoding.UTF8.GetBytes(dataY.ToString()));
-
-
-            //data = new byte[1024];
-
-            //recX = server.Receive(dataX);
-            //recY = server .Receive(dataY);
         }
 
         private void connectButton_Click(object sender, EventArgs e)
         {
+            if(serverCheck.Checked)
+            {
+                IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("10.63.42.206"), 9050);
+
+                Socket newsock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+                newsock.Bind(ipep);
+
+                newsock.Listen(10);
+
+                Refresh();
+
+                Socket client = newsock.Accept();
+
+                IPEndPoint clientep = (IPEndPoint)client.RemoteEndPoint;
+            }
+            else if(clientCheck.Checked)
+            {
                 IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("10.63.42.206"), 9050);
                 try
                 {
@@ -142,13 +132,13 @@ namespace NetworkDrawing
                 }
                 catch (SocketException)
                 {
-                connectButton.Text = "Error";
-                Thread.Sleep(1000);
-                connectButton.Text = "Connect";
+                    connectButton.Text = "Error";
+                    Refresh();
+                    Thread.Sleep(1000);
+                    connectButton.Text = "Connect";
                 }
-
-            ClientFunc(x, y);
             }
         }
     }
+}
 
