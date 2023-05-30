@@ -40,6 +40,10 @@ namespace NetworkDrawing
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
             Point mousePoint = new Point(e.X, e.Y);
+            x = e.X;
+            y = e.Y;
+
+            ServerFunc(x, y);
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -81,7 +85,7 @@ namespace NetworkDrawing
             //g.DrawRectangle(redPen, recX, recY, 1, 1);
         }
 
-        private void ClientFunc(int x, int y)
+        private void ClientFunc()
         {
             Graphics g = this.CreateGraphics();
 
@@ -91,6 +95,10 @@ namespace NetworkDrawing
             xList.Add(recX);
             yList.Add(recY);
 
+            for (int i = 0; i < xList.Count; i++)
+            {
+                testLabel.Text += $"x = {xList[i]}, y = {yList[i]}";
+            }
             Refresh();
 
             // g.DrawRectangle(redPen, recX, recY, 1, 1);
@@ -138,6 +146,11 @@ namespace NetworkDrawing
                     connectButton.Text = "Try Again";
                 }
             }
+        }
+
+        private void receiveButton_Click(object sender, EventArgs e)
+        {
+            ClientFunc();
         }
     }
 }

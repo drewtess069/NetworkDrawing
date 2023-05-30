@@ -31,6 +31,8 @@
             this.serverCheck = new System.Windows.Forms.CheckBox();
             this.clientCheck = new System.Windows.Forms.CheckBox();
             this.connectButton = new System.Windows.Forms.Button();
+            this.testLabel = new System.Windows.Forms.Label();
+            this.receiveButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // serverCheck
@@ -66,11 +68,31 @@
             this.connectButton.UseVisualStyleBackColor = true;
             this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
             // 
+            // testLabel
+            // 
+            this.testLabel.Location = new System.Drawing.Point(391, 23);
+            this.testLabel.Name = "testLabel";
+            this.testLabel.Size = new System.Drawing.Size(421, 155);
+            this.testLabel.TabIndex = 3;
+            this.testLabel.Text = "label1";
+            // 
+            // receiveButton
+            // 
+            this.receiveButton.Location = new System.Drawing.Point(20, 142);
+            this.receiveButton.Name = "receiveButton";
+            this.receiveButton.Size = new System.Drawing.Size(136, 36);
+            this.receiveButton.TabIndex = 4;
+            this.receiveButton.Text = "Receive";
+            this.receiveButton.UseVisualStyleBackColor = true;
+            this.receiveButton.Click += new System.EventHandler(this.receiveButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1694, 1061);
+            this.Controls.Add(this.receiveButton);
+            this.Controls.Add(this.testLabel);
             this.Controls.Add(this.connectButton);
             this.Controls.Add(this.clientCheck);
             this.Controls.Add(this.serverCheck);
@@ -89,6 +111,8 @@
         private System.Windows.Forms.CheckBox serverCheck;
         private System.Windows.Forms.CheckBox clientCheck;
         private System.Windows.Forms.Button connectButton;
+        private System.Windows.Forms.Label testLabel;
+        private System.Windows.Forms.Button receiveButton;
     }
 }
 
