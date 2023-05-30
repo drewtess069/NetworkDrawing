@@ -135,7 +135,7 @@ namespace NetworkDrawing
                     connectButton.Text = "Error";
                     Refresh();
                     Thread.Sleep(1000);
-                    connectButton.Text = "Connect";
+                    connectButton.Text = "Try Again";
                 }
             }
         }
