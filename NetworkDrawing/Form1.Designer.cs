@@ -36,9 +36,10 @@
             // serverCheck
             // 
             this.serverCheck.AutoSize = true;
-            this.serverCheck.Location = new System.Drawing.Point(13, 13);
+            this.serverCheck.Location = new System.Drawing.Point(20, 20);
+            this.serverCheck.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.serverCheck.Name = "serverCheck";
-            this.serverCheck.Size = new System.Drawing.Size(57, 17);
+            this.serverCheck.Size = new System.Drawing.Size(74, 24);
             this.serverCheck.TabIndex = 0;
             this.serverCheck.Text = "Server";
             this.serverCheck.UseVisualStyleBackColor = true;
@@ -46,31 +47,34 @@
             // clientCheck
             // 
             this.clientCheck.AutoSize = true;
-            this.clientCheck.Location = new System.Drawing.Point(12, 36);
+            this.clientCheck.Location = new System.Drawing.Point(18, 55);
+            this.clientCheck.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.clientCheck.Name = "clientCheck";
-            this.clientCheck.Size = new System.Drawing.Size(52, 17);
+            this.clientCheck.Size = new System.Drawing.Size(68, 24);
             this.clientCheck.TabIndex = 1;
             this.clientCheck.Text = "Client";
             this.clientCheck.UseVisualStyleBackColor = true;
             // 
             // connectButton
             // 
-            this.connectButton.Location = new System.Drawing.Point(12, 60);
+            this.connectButton.Location = new System.Drawing.Point(18, 92);
+            this.connectButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.connectButton.Name = "connectButton";
-            this.connectButton.Size = new System.Drawing.Size(75, 23);
+            this.connectButton.Size = new System.Drawing.Size(76, 31);
             this.connectButton.TabIndex = 2;
-            this.connectButton.Text = "Connect";
+            this.connectButton.Text = "Server";
             this.connectButton.UseVisualStyleBackColor = true;
             this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1129, 730);
+            this.ClientSize = new System.Drawing.Size(1694, 1061);
             this.Controls.Add(this.connectButton);
             this.Controls.Add(this.clientCheck);
             this.Controls.Add(this.serverCheck);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);

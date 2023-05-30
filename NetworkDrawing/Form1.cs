@@ -10,8 +10,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net;
-using System.Net.Sockets;
 using System.Threading;
 
 namespace NetworkDrawing
@@ -61,7 +59,7 @@ namespace NetworkDrawing
             {
                 for (int i = 0; i < xList.Count; i++)
                 {
-                    e.Graphics.DrawRectangle(redPen, x, y, Width, Height);
+                    e.Graphics.DrawRectangle(redPen, x, y, 1, 1);
                 }
             }
         }
@@ -73,7 +71,7 @@ namespace NetworkDrawing
             int recX;
             int recY;
 
-            IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
+            IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("10.63.42.206"), 9050);
 
             Socket newsock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
@@ -130,8 +128,8 @@ namespace NetworkDrawing
 
             //data = new byte[1024];
 
-            recX = server.Receive(dataX);
-            recY = server .Receive(dataY);
+            //recX = server.Receive(dataX);
+            //recY = server .Receive(dataY);
         }
 
         private void connectButton_Click(object sender, EventArgs e)
@@ -148,6 +146,8 @@ namespace NetworkDrawing
                 Thread.Sleep(1000);
                 connectButton.Text = "Connect";
                 }
+
+            ClientFunc(x, y);
             }
         }
     }
