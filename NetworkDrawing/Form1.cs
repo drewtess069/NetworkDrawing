@@ -21,12 +21,13 @@ namespace NetworkDrawing
         Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         Socket client;
 
+
         Point mousePoint;
 
         int x;
         int y;
         int brushSize = 10;
-        Pen redPen = new Pen(Color.Red, 20);
+        Pen redPen = new Pen(Color.Red, 1);
         SolidBrush drawBrush = new SolidBrush(Color.Red);
 
         List<int> xList = new List<int>();
@@ -48,16 +49,16 @@ namespace NetworkDrawing
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
+            e.Graphics.DrawRectangle(redPen, mousePoint.X, mousePoint.Y, 1, 1);
+            //e.Graphics.FillRectangle(drawBrush, x, y, brushSize, brushSize);
 
-            e.Graphics.FillRectangle(drawBrush, x, y, brushSize, brushSize);
-
-            if (xList.Count > 0)
-            {
-                for (int i = 0; i < xList.Count; i++)
-                {
-                    e.Graphics.DrawRectangle(redPen, x, y, 1, 1);
-                }
-            }
+            //if (xList.Count > 0)
+            //{
+            //    for (int i = 0; i < xList.Count; i++)
+            //    {
+            //        e.Graphics.DrawRectangle(redPen, x, y, 1, 1);
+            //    }
+            //}
         }
 
         private void ServerFunc(int x, int y)
@@ -84,7 +85,6 @@ namespace NetworkDrawing
             client.Send(dataX, dataX.Length, SocketFlags.None);
             client.Send(dataY, dataY.Length, SocketFlags.None);
 
-
             dataX = new byte[1024];
             dataY = new byte[1024];
 
@@ -100,17 +100,37 @@ namespace NetworkDrawing
         {
             Graphics g = this.CreateGraphics();
 
-            int recX = server.Receive(dataX);
-            int recY = server.Receive(dataY);
+            //byte[] recX = new byte[1024];
+            //byte[] recY = new byte[1024];
 
-            xList.Add(recX);
-            yList.Add(recY);
+            var recX = server.Receive(dataX);
+
+           // int index = 
+
+            //var recY = server.Receive(dataY);
+
+            string stringPoint = $"{Encoding.UTF8.GetString(dataX, 0, recX)}";
+
+            int index = stringPoint.IndexOf(",");
+            string x = stringPoint.Substring(0, index);
+            string y  = stringPoint.Substring(index + 1);
+             mousePoint = new Point(Convert.ToInt16(x), Convert.ToInt16(y));
+            //foreach(Byte b in dataX)
+            //{
+            //    char c = (char)b;
+            //    x += c;
+            //}
+
+            testLabel.Text = $"{Encoding.UTF8.GetString(dataX, 0, recX)}";
+            Refresh();
+            Thread.Sleep(1000);
+            //xList.Add(recX);
+            //yList.Add(recY);
 
             for (int i = 0; i < xList.Count; i++)
             {
                 testLabel.Text += $"x = {xList[i]}, y = {yList[i]}";
             }
-            Refresh();
 
             // g.DrawRectangle(redPen, recX, recY, 1, 1);
 
@@ -137,7 +157,7 @@ namespace NetworkDrawing
 
                 Refresh();
 
-                Socket client = newsock.Accept();
+                client = newsock.Accept();
 
                 if (client == null)
                 {
@@ -151,7 +171,7 @@ namespace NetworkDrawing
                 Thread.Sleep(1000); 
 
 
-                IPEndPoint clientep = (IPEndPoint)client.RemoteEndPoint;
+                //IPEndPoint clientep = (IPEndPoint)client.RemoteEndPoint;
             }
             else if(clientCheck.Checked)
             {
