@@ -21,6 +21,7 @@ namespace NetworkDrawing
         Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         Socket client;
 
+        List<Point> drawPoints = new List<Point>();
 
         Point mousePoint;
 
@@ -49,7 +50,12 @@ namespace NetworkDrawing
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawRectangle(redPen, mousePoint.X, mousePoint.Y, 1, 1);
+
+            foreach (Point p in drawPoints)
+            {
+                e.Graphics.DrawRectangle(redPen, p.X, p.Y, 1, 1);
+            }
+
             //e.Graphics.FillRectangle(drawBrush, x, y, brushSize, brushSize);
 
             //if (xList.Count > 0)
@@ -63,11 +69,11 @@ namespace NetworkDrawing
 
         private void ServerFunc(int x, int y)
         {
-            if(client == null)
+            if (client == null)
             {
                 testLabel.Text = "null";
             }
-                else
+            else
             {
                 testLabel.Text = "Client Found";
             }
@@ -93,6 +99,16 @@ namespace NetworkDrawing
 
             xList.Add(recX);
             yList.Add(recY);
+
+
+            Array.Clear(dataX, 0, dataX.Length);
+            Array.Clear(dataY, 0, dataY.Length);
+
+            //for (int i = 0; i < dataX.Length; i++)
+            //{
+            //    //data
+            //}
+
             //g.DrawRectangle(redPen, recX, recY, 1, 1);
         }
 
@@ -105,7 +121,7 @@ namespace NetworkDrawing
 
             var recX = server.Receive(dataX);
 
-           // int index = 
+            // int index = 
 
             //var recY = server.Receive(dataY);
 
@@ -113,13 +129,9 @@ namespace NetworkDrawing
 
             int index = stringPoint.IndexOf(",");
             string x = stringPoint.Substring(0, index);
-            string y  = stringPoint.Substring(index + 1);
-             mousePoint = new Point(Convert.ToInt16(x), Convert.ToInt16(y));
-            //foreach(Byte b in dataX)
-            //{
-            //    char c = (char)b;
-            //    x += c;
-            //}
+            string y = stringPoint.Substring(index + 1);
+            mousePoint = new Point(Convert.ToInt16(x), Convert.ToInt16(y));
+            drawPoints.Add(mousePoint);
 
             testLabel.Text = $"{Encoding.UTF8.GetString(dataX, 0, recX)}";
             Refresh();
@@ -145,7 +157,7 @@ namespace NetworkDrawing
 
         private void connectButton_Click(object sender, EventArgs e)
         {
-            if(serverCheck.Checked)
+            if (serverCheck.Checked)
             {
                 IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("10.63.42.206"), 9050);
 
@@ -168,12 +180,12 @@ namespace NetworkDrawing
                     testLabel.Text = "Client Found";
                 }
                 Refresh();
-                Thread.Sleep(1000); 
+                Thread.Sleep(1000);
 
 
                 //IPEndPoint clientep = (IPEndPoint)client.RemoteEndPoint;
             }
-            else if(clientCheck.Checked)
+            else if (clientCheck.Checked)
             {
                 IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("10.63.42.206"), 9050);
                 try
