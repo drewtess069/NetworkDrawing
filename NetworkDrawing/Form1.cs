@@ -28,7 +28,7 @@ namespace NetworkDrawing
         int x;
         int y;
         int brushSize = 10;
-        Pen redPen = new Pen(Color.Red, 1);
+        Pen redPen = new Pen(Color.Red, 50);
         SolidBrush drawBrush = new SolidBrush(Color.Red);
 
         List<int> xList = new List<int>();
@@ -44,6 +44,10 @@ namespace NetworkDrawing
             Point mousePoint = new Point(e.X, e.Y);
             x = e.X;
             y = e.Y;
+
+            Graphics g = this.CreateGraphics();
+
+            g.DrawRectangle(redPen, x, y, 1, 1);
 
             ServerFunc(x, y);
         }
@@ -85,11 +89,15 @@ namespace NetworkDrawing
             int recX;
             int recY;
 
-            dataX = Encoding.UTF8.GetBytes(x.ToString());
-            dataY = Encoding.UTF8.GetBytes(y.ToString());
+            string recPoint = $"{x},{y}";
+
+            
+
+            dataX = Encoding.UTF8.GetBytes(recPoint);
+            //dataY = Encoding.UTF8.GetBytes(y.ToString());
 
             client.Send(dataX, dataX.Length, SocketFlags.None);
-            client.Send(dataY, dataY.Length, SocketFlags.None);
+            //client.Send(dataY, dataY.Length, SocketFlags.None);
 
             dataX = new byte[1024];
             dataY = new byte[1024];
@@ -102,7 +110,7 @@ namespace NetworkDrawing
 
 
             Array.Clear(dataX, 0, dataX.Length);
-            Array.Clear(dataY, 0, dataY.Length);
+            //Array.Clear(dataY, 0, dataY.Length);
 
             //for (int i = 0; i < dataX.Length; i++)
             //{
